@@ -61,7 +61,7 @@ if menu == "Nieuw experiment":
 
 elif menu == "Bekijk experimenten":
     st.header("Experimentenlijst") # experimentenlijst als header
-    c.execute("SELECT * FROM experiments") selecteer  alles van experimenten tabel
+    c.execute("SELECT * FROM experiments") #selecteer  alles van experimenten tabel
     # fetch alle rows
     rows = c.fetchall()
     if rows:
