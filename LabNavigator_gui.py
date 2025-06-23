@@ -6,20 +6,20 @@ from Bio import SeqIO
 from Bio import Entrez
 import io
 import re
-import io
+
 # Verbind met de database en krijg cursor om queries uit te voeren
 conn, c = connect_db()
 
 st.image("Untitled_Artwork.png", width=500)
 
-# Titel bovenaan de webapp
+# titel bovenaan de webapp
 st.title("✧˖✧ Lab Navigator ✧˖✧")
 st.write("Welkom bij Lab Navigator! " \
 "Dit is een hulpmiddel om eenvoudig het lab te navigeren. " \
 "Maak een keuze welke tool je wilt gebruiken, zoals een planner om experimenten in te plannen," \
 " Gene Fetcher om gensequenties te downloaden, een FASTQ naar FASTA converter en de smelttemperatuur-rekenmachine.")
 
-# Maak een dropdownmenu (selectbox) waarin de gebruiker een optie kiest
+# maak een dropdownmenu (selectbox) waarin de gebruiker een optie kiest
 menu = st.selectbox("Maak een keuze uit de toolbox:", [
     "Nieuw experiment",
     "Bekijk experimenten",
@@ -31,7 +31,7 @@ menu = st.selectbox("Maak een keuze uit de toolbox:", [
     "Gen downloaden (NCBI database)"
 ])
 
-# Voor elke optie wordt iets anders getoond en uitgevoerd:
+# voor elke optie wordt iets anders getoond en uitgevoerd:
 
 if menu == "Nieuw experiment":
     st.header("Nieuw experiment toevoegen")
@@ -40,33 +40,37 @@ if menu == "Nieuw experiment":
     date = st.date_input("Datum:")
     time = st.time_input("Tijd:")
     
-    duration = st.number_input("Duur in minuten", min_value=1)  # Getal voor duur
-    user = st.text_input("Gebruiker")  # Naam van de persoon
+    duration = st.number_input("Duur in minuten", min_value=1)  # getal voor duur
+    user = st.text_input("Gebruiker")  # naam van de persoon
 
-    # Als gebruiker op knop 'Toevoegen' klikt:
+    # als gebruiker op knop toevoegen klikt:
     if st.button("Toevoegen"):
         # Zet date en time om naar string formats
         date_str = date.strftime("%Y-%m-%d")
         time_str = time.strftime("%H:%M")
 
-        # Voeg de ingevoerde data toe in de database
+        # voeg de ingevoerde data toe in de database
         c.execute('''
             INSERT INTO experiments (name, date, start_time, duration, user)
             VALUES (?, ?, ?, ?, ?)
         ''', (name, date_str, time_str, duration, user))
-        # Sla de wijziging op in DB
+        # sla de wijziging op in DB
         conn.commit()
-        # Laat een succesbericht zien
+        # laat een succesbericht zien
         st.success("Experiment toegevoegd!")
 
 elif menu == "Bekijk experimenten":
-    st.header("Experimentenlijst")
-    c.execute("SELECT * FROM experiments")
+    st.header("Experimentenlijst") # experimentenlijst als header
+    c.execute("SELECT * FROM experiments") selecteer  alles van experimenten tabel
+    # fetch alle rows
     rows = c.fetchall()
     if rows:
+        # loop gaat door alle rows
         for row in rows:
+            # gaat door alle rows en schrijft info per row op
             st.write(f"ID: {row[0]} | Naam: {row[1]} | Datum: {row[2]} | Start: {row[3]} | "
                      f"Duur: {row[4]} min | Gebruiker: {row[5]} | Status: {row[6]}")
+    # geen rows is geen experimenten gevonden
     else:
         st.info("Geen experimenten gevonden.")
 
@@ -193,13 +197,15 @@ elif menu == "Gen downloaden (NCBI database)":
     if st.button("Downloaden"): # als user op de download knop drukt
         data = fetch_gene_data(gene, organism) # roept functie hierboven aan 
         if data: # als er data is 
-            st.success(f"✅ Gen {gene} voor {organism} gevonden!") # geef aan dat het gen is gevonden
+            st.success(f"✅ Gen {gene} voor {organism} gevonden!") # geef aan dat het gen is gevonden aan gebruiker
+            # dit zorgt ervoor dat het gen gedownload word
             st.download_button(
                 label="⬇️ Download FASTA bestand",
                 data=data,
                 file_name=f"{gene}.fasta",
                 mime="text/plain"
             )
+        # als er geen gen is gevonden
         else:
-            st.error(f"❌ Gen '{gene}' niet gevonden of download mislukt.")
+            st.error(f"❌ Gen '{gene}' niet gevonden of download mislukt.") # geeft aan dat het niet is gelukt
 
