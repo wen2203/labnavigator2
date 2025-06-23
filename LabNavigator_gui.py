@@ -3,6 +3,7 @@ import os  # Import os voor bestands- en mapbewerkingen
 from labmate import connect_db, calculate_tm  # Eigen functies: verbinden met DB, smelttemp berekenen
 from genemate import convert_fastq_to_fasta, download_gene  # Eigen functies voor bestand en gen ophalen
 from Bio import SeqIO
+from Bio import Entrez
 import io
 import re
 import io
@@ -27,8 +28,7 @@ menu = st.selectbox("Maak een keuze uit de toolbox:", [
     "Exporteer CSV",
     "Smelttemperatuur berekenen",
     "Convert FASTQ → FASTA",
-    "Gen downloaden (NCBI database)",
-    "Afsluiten"
+    "Gen downloaden (NCBI database)"
 ])
 
 # Voor elke optie wordt iets anders getoond en uitgevoerd:
@@ -159,8 +159,7 @@ elif menu == "Convert FASTQ → FASTA":
 
 
 elif menu == "Gen downloaden (NCBI database)":
-    from Bio import Entrez
-    Entrez.email = "your.email@example.com"  # ← vervang met jouw echte e-mail
+    Entrez.email = "692453@student.inholland.nl"  
 
     st.header("Gen downloaden van NCBI")
     gene = st.text_input("Gennaam:")
@@ -190,11 +189,11 @@ elif menu == "Gen downloaden (NCBI database)":
             return fasta_data if fasta_data.strip() else None
         except Exception as e:
             return None
-
-    if st.button("Downloaden"):
-        data = fetch_gene_data(gene, organism)
-        if data:
-            st.success(f"✅ Gen {gene} voor {organism} gevonden!")
+    
+    if st.button("Downloaden"): # als user op de download knop drukt
+        data = fetch_gene_data(gene, organism) # roept functie hierboven aan 
+        if data: # als er data is 
+            st.success(f"✅ Gen {gene} voor {organism} gevonden!") # geef aan dat het gen is gevonden
             st.download_button(
                 label="⬇️ Download FASTA bestand",
                 data=data,
@@ -204,6 +203,3 @@ elif menu == "Gen downloaden (NCBI database)":
         else:
             st.error(f"❌ Gen '{gene}' niet gevonden of download mislukt.")
 
-
-elif menu == "Afsluiten":
-    st.write("Sluit de app of stop het script.")
