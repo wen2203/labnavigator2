@@ -159,7 +159,7 @@ elif menu == "Convert FASTQ → FASTA":
 
 
 elif menu == "Gen downloaden (NCBI database)":
-    Entrez.email = "your.email@example.com"  # ← vervang met jouw echte e-mail"  
+    Entrez.email = "wendypan22@hotmail.com"  
 
     st.header("Gen downloaden van NCBI")
     gene = st.text_input("Gennaam:")
