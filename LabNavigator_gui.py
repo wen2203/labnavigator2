@@ -122,12 +122,12 @@ elif menu == "Exporteer CSV":
             writer.writerow(['ID','Naam','Datum','Starttijd','Duur','Gebruiker','Materialen','Locatie','Status'])
             writer.writerows(rows)
         st.success("✅ CSV-bestand gemaakt!")
-            st.download_button(
-                label="⬇️ Download CSV-bestand",
-                data=fasta_str,
-                file_name=out_name,
-                mime="text/plain"
-            )
+        st.download_button(
+            label="⬇️ Download CSV-bestand",
+            data=fasta_str,
+            file_name=out_name,
+            mime="text/plain"
+        )
 
 elif menu == "Smelttemperatuur berekenen":
     st.header("Smelttemperatuur berekenen")
