@@ -1,7 +1,6 @@
 import streamlit as st  # Import Streamlit om een webapp te maken
 import os  # Import os voor bestands- en mapbewerkingen
 from labmate import connect_db, calculate_tm  # Eigen functies: verbinden met DB, smelttemp berekenen
-from genemate import convert_fastq_to_fasta, download_gene  # Eigen functies voor bestand en gen ophalen
 from Bio import SeqIO
 from Bio import Entrez
 import io
