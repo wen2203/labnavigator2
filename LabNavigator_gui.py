@@ -69,6 +69,7 @@ if menu == "Nieuw experiment":
 
 
 elif menu == "Bekijk experimenten":
+    st.markdown("<h3 style='color:deeppink;'>Experimentenlijst</h3>", unsafe_allow_html=True)
     st.header("Experimentenlijst") # experimentenlijst als header
     c.execute("SELECT * FROM experiments") #selecteer  alles van experimenten tabel
     # fetch alle rows
@@ -85,7 +86,7 @@ elif menu == "Bekijk experimenten":
 
 
 elif menu == "Rond experiment af":
-    st.header("Markeer experiment als afgerond")
+    st.markdown("<h3 style='color:deeppink;'>Markeer experiment als afgerond</h3>", unsafe_allow_html=True)
     c.execute("SELECT id, name, date, start_time, duration, user, status FROM experiments WHERE status != 'done'")
     rows = c.fetchall()
 
