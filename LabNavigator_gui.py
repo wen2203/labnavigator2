@@ -1,19 +1,22 @@
-import streamlit as st  # Import Streamlit om een webapp te maken
+import streamlit as st  # import Streamlit om een webapp te maken https://docs.streamlit.io/develop/api-reference
 import os  # Import os voor bestands- en mapbewerkingen
-from labmate import connect_db, calculate_tm  # Eigen functies: verbinden met DB, smelttemp berekenen
+from labmate import connect_db, calculate_tm  # zelfgemaakte functies: verbinden met DB, smelttemp bereken
+from genemate import fetch_gene_data
+
 from Bio import SeqIO
 from Bio import Entrez
 import io
-import re
 import csv
 
-# Verbind met de database en krijg cursor om queries uit te voeren
+# Verbind met de database en krijg cursor om sql queries uit te voeren
+# conn is de verbinding en c is de pen n queries uit te voeren
 conn, c = connect_db()
 
-st.image("Untitled_Artwork.png", width=500)
+st.image("Untitled_Artwork.png", width=500) # voeg een foto toe als logo en
 
 # titel bovenaan de webapp
 st.title("✧˖✧ Lab Navigator ✧˖✧")
+# kleine alinea over Lab Navigator
 st.write("Welkom bij Lab Navigator! " \
 "Dit is een hulpmiddel om eenvoudig het lab te navigeren. " \
 "Maak een keuze welke tool je wilt gebruiken, zoals een planner om experimenten in te plannen," \
@@ -33,6 +36,7 @@ menu = st.selectbox("Maak een keuze uit de toolbox:", [
 
 # voor elke optie wordt iets anders getoond en uitgevoerd:
 
+# wanneer er nieuw exp word geselecteerd
 if menu == "Nieuw experiment":
     st.header("Nieuw experiment toevoegen")
     # Hier vraagt de app om gegevens van het experiment
@@ -196,22 +200,9 @@ elif menu == "Gen downloaden (NCBI database)":
         "Drosophila melanogaster",
         "Gorilla gorilla"
     ])
-
-    def fetch_gene_data(gene_name, organism):
-        try:
-            handle = Entrez.esearch(db="nucleotide", term=f"{gene_name}[Gene] AND {organism}[Organism]", retmax=1)
-            record = Entrez.read(handle)
-            ids = record.get("IdList", [])
-            if not ids:
-                return None
-            fetch_handle = Entrez.efetch(db="nucleotide", id=ids[0], rettype="fasta", retmode="text")
-            fasta_data = fetch_handle.read()
-            return fasta_data if fasta_data.strip() else None
-        except Exception as e:
-            return None
     
     if st.button("Downloaden"): # als user op de download knop drukt
-        data = fetch_gene_data(gene, organism) # roept functie hierboven aan 
+        data = fetch_gene_data(gene, organism) # roept eigen functie aan 
         if data: # als er data is 
             st.success(f"✅ Gen {gene} voor {organism} gevonden!") # geef aan dat het gen is gevonden aan gebruiker
             # dit zorgt ervoor dat het gen gedownload word
