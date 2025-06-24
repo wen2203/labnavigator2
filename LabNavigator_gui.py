@@ -25,7 +25,7 @@ st.write("Welkom bij Lab Navigator! " \
 
 
 # een dropdownmenu/selectbox waarin de gebruiker een optie kiest
-menu = st.sidebar.button("Maak een keuze uit de toolbox:", [
+menu = st.sidebar.radio("Maak een keuze uit de toolbox:", [
     "Nieuw experiment",
     "Bekijk experimenten",
     "Rond experiment af",
