@@ -1,0 +1,10 @@
+[theme]
+base = "light"
+primaryColor = "#ff69b4"  # hotpink als accentkleur
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#fce4ec"  # lichtroze achtergrond voor widgets
+textColor = "#000000"
+font = "sans serif"
+
+[ui]
+sidebar_expanded = true
