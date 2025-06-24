@@ -70,7 +70,6 @@ if menu == "Nieuw experiment":
 
 elif menu == "Bekijk experimenten":
     st.markdown("<h3 style='color:deeppink;'>Experimentenlijst</h3>", unsafe_allow_html=True)
-    st.header("Experimentenlijst") # experimentenlijst als header
     c.execute("SELECT * FROM experiments") #selecteer  alles van experimenten tabel
     # fetch alle rows
     rows = c.fetchall()
@@ -104,7 +103,7 @@ elif menu == "Rond experiment af":
 
 
 elif menu == "Verwijder experiment":
-    st.header("Verwijder experiment")
+    st.markdown("<h3 style='color:deeppink;'>Verwijder experiment</h3>", unsafe_allow_html=True)
     c.execute("SELECT id, name, date, start_time, duration, user, status FROM experiments")
     rows = c.fetchall()
     if rows:
@@ -121,7 +120,8 @@ elif menu == "Verwijder experiment":
 
 
 elif menu == "Exporteer CSV":
-    st.header("Exporteer experimenten naar CSV")
+    
+    st.markdown("<h3 style='color:deeppink;'>Exporteer experimenten naar CSV</h3>", unsafe_allow_html=True)
 
     if st.button("Exporteer CSV"):
         # Data ophalen uit de database
@@ -153,18 +153,20 @@ elif menu == "Exporteer CSV":
 
 
 elif menu == "Smelttemperatuur berekenen":
-    st.header("Smelttemperatuur berekenen")
+    st.markdown("<h3 style='color:deeppink;'>Smelttemperatuur berekenen</h3>", unsafe_allow_html=True)
+
     seq = st.text_input("Voer DNA-sequentie in (A,T,G,C):")
     if st.button("Bereken"):
         resultaat = calculate_tm(seq)
         st.write(resultaat)
 
 
-elif menu == "Convert FASTQ → FASTA":
+elif menu == "Convert FASTQ to FASTA":
+    
     from Bio import SeqIO
     import io
 
-    st.title("FASTQ naar FASTA Converter")
+    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
@@ -195,7 +197,7 @@ elif menu == "Convert FASTQ → FASTA":
 elif menu == "Gen downloaden (NCBI database)":
     Entrez.email = "wendypan22@hotmail.com"  
 
-    st.header("Gen downloaden van NCBI")
+    st.markdown("<h3 style='color:deeppink;'>Gen downloaden van NCBI</h3>", unsafe_allow_html=True)
     gene = st.text_input("Gennaam:")
     organism = st.selectbox("Organisme:", [
         "Homo sapiens",
