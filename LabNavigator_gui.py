@@ -162,7 +162,7 @@ elif menu == "Smelttemperatuur berekenen":
 
 
 elif menu == "Convert FASTQ to FASTA":
-    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
+    #st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
     
     if uploaded_file is not None:
