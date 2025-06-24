@@ -1,11 +1,12 @@
+# om met sql te werken
 import sqlite3
-import csv
+# voor regex 
 import re
 
-DB_NAME = "labplanner.db"
-
 def connect_db():
-    conn = sqlite3.connect(DB_NAME)
+    # connect met databese
+    conn = sqlite3.connect("labplanner.db")
+    # maakt een cursor aan om sql queries uit te voeren
     c = conn.cursor()
     c.execute('''
         CREATE TABLE IF NOT EXISTS experiments (
@@ -22,12 +23,20 @@ def connect_db():
     return conn, c
 
 def calculate_tm(sequence):
+    # maakt sequentie uppercase
     sequence = sequence.upper()
+    # als het niet matcht met A, T, G OF C dan fout
     if not re.fullmatch(r"[ATGC]+", sequence):
         return("Fout: de sequentie mag alleen A, T, G en C bevatten.")
+
+    # tel de nucleotiden
     a = sequence.count("A")
     t = sequence.count("T")
     g = sequence.count("G")
     c = sequence.count("C")
+
+    # smelttemperatuur formule
     tm = 2 * (a + t) + 4 * (g + c)
+
+    # returnt temperatuur met string
     return(f"Geschatte smelttemperatuur: {tm}°C\n")
