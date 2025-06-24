@@ -190,11 +190,12 @@ elif menu == "Smelttemperatuur berekenen":
 
 # converter code is van chagpt
 # download button https://docs.streamlit.io/develop/api-reference/widgets/st.download_button
-elif menu == "Convert FASTQ to FASTA":
+
+elif menu == "Convert FASTQ → FASTA":
     from Bio import SeqIO
     import io
 
-    st.header("FASTQ naar FASTA Converter")
+    st.title("FASTQ naar FASTA Converter")
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
