@@ -1,7 +1,7 @@
 import streamlit as st  # import Streamlit om een webapp te maken https://docs.streamlit.io/develop/api-reference
 import os  # Import os voor bestands- en mapbewerkingen
 from labmate import connect_db, calculate_tm  # zelfgemaakte functies: verbinden met DB, smelttemp bereken
-from genemate import fetch_gene_data
+from genemate import fetch_gene_data # zelfgemaakte functie gen downloaden
 
 from Bio import SeqIO
 from Bio import Entrez
@@ -12,10 +12,11 @@ import csv
 # conn is de verbinding en c is de pen n queries uit te voeren
 conn, c = connect_db()
 
-st.image("Untitled_Artwork.png", width=500) # voeg een foto toe als logo en
+# voeg een foto toe als logo 
+# logo is zelfgemaakt via Procreate 
+st.image("Untitled_Artwork.png", width=500) 
 
-
-# titel bovenaan de webapp dit is met Chatgpt gedaan voor de kleur
+# header bovenaan de webapp dit is met Chatgpt gedaan voor de kleur
 st.markdown("<h1 style='color:hotpink;'>✧˖✧ Lab Navigator ✧˖✧</h1>", unsafe_allow_html=True)
 
 # kleine alinea over Lab Navigator
@@ -25,8 +26,9 @@ st.write("Welkom bij Lab Navigator! " \
 " Gene Fetcher om gensequenties te downloaden, een FASTQ naar FASTA converter en de smelttemperatuur-rekenmachine.")
 
 
-# een dropdownmenu/selectbox waarin de gebruiker een optie kiest
-menu = st.sidebar.radio("Maak een keuze uit de toolbox:", [
+# een sidebar waar je opties kan selecteren
+# https://docs.streamlit.io/develop/api-reference/layout/st.sidebar
+menu = st.sidebar.radio("Maak een keuze uit de toolbox:", (
     "Nieuw experiment",
     "Bekijk experimenten",
     "Rond experiment af",
@@ -35,12 +37,14 @@ menu = st.sidebar.radio("Maak een keuze uit de toolbox:", [
     "Smelttemperatuur berekenen",
     "Convert FASTQ → FASTA",
     "Gen downloaden (NCBI database)"
-])
+))
 
 # voor elke optie wordt iets anders getoond en uitgevoerd:
 
-# wanneer er nieuw exp word geselecteerd
+# wanneer er "Nieuw experiment" word geselecteerd
 if menu == "Nieuw experiment":
+
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Nieuw experiment toevoegen</h3>", unsafe_allow_html=True)
     # Hier vraagt de app om gegevens van het experiment
     name = st.text_input("Experimentnaam")
@@ -48,7 +52,7 @@ if menu == "Nieuw experiment":
     time = st.time_input("Tijd:")
     
     duration = st.number_input("Duur in minuten", min_value=1)  # getal voor duur
-    user = st.text_input("Gebruiker")  # naam van de persoon
+    user = st.text_input("Je naam")  # naam van de persoon
 
     
     # als gebruiker op knop toevoegen klikt:
@@ -57,7 +61,7 @@ if menu == "Nieuw experiment":
         date_str = date.strftime("%Y-%m-%d")
         time_str = time.strftime("%H:%M")
 
-        # voeg de ingevoerde data toe in de database
+        # voeg de ingevoerde data toe in de database experiments.db
         c.execute('''
             INSERT INTO experiments (name, date, start_time, duration, user)
             VALUES (?, ?, ?, ?, ?)
@@ -69,6 +73,8 @@ if menu == "Nieuw experiment":
 
 
 elif menu == "Bekijk experimenten":
+    
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Experimentenlijst</h3>", unsafe_allow_html=True)
     c.execute("SELECT * FROM experiments") #selecteer  alles van experimenten tabel
     # fetch alle rows
@@ -85,6 +91,8 @@ elif menu == "Bekijk experimenten":
 
 
 elif menu == "Rond experiment af":
+
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Markeer experiment als afgerond</h3>", unsafe_allow_html=True)
     c.execute("SELECT id, name, date, start_time, duration, user, status FROM experiments WHERE status != 'done'")
     rows = c.fetchall()
@@ -103,6 +111,8 @@ elif menu == "Rond experiment af":
 
 
 elif menu == "Verwijder experiment":
+
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Verwijder experiment</h3>", unsafe_allow_html=True)
     c.execute("SELECT id, name, date, start_time, duration, user, status FROM experiments")
     rows = c.fetchall()
@@ -121,6 +131,7 @@ elif menu == "Verwijder experiment":
 
 elif menu == "Exporteer CSV":
     
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Exporteer experimenten naar CSV</h3>", unsafe_allow_html=True)
 
     if st.button("Exporteer CSV"):
@@ -153,6 +164,8 @@ elif menu == "Exporteer CSV":
 
 
 elif menu == "Smelttemperatuur berekenen":
+    
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Smelttemperatuur berekenen</h3>", unsafe_allow_html=True)
 
     seq = st.text_input("Voer DNA-sequentie in (A,T,G,C):")
@@ -162,6 +175,8 @@ elif menu == "Smelttemperatuur berekenen":
 
 
 elif menu == "Convert FASTQ to FASTA":
+
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
     st.header("Convert FASTQ to FASTA")
 
@@ -191,8 +206,10 @@ elif menu == "Convert FASTQ to FASTA":
             ) 
 
 elif menu == "Gen downloaden (NCBI database)":
+    
     Entrez.email = "wendypan22@hotmail.com"  
 
+    # header met Chatgpt gedaan voor de kleur
     st.markdown("<h3 style='color:deeppink;'>Gen downloaden van NCBI</h3>", unsafe_allow_html=True)
     gene = st.text_input("Gennaam:")
     organism = st.selectbox("Organisme:", [
