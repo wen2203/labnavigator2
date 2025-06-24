@@ -188,11 +188,11 @@ elif menu == "Smelttemperatuur berekenen":
 
 
 
-elif menu == "Convert FASTQ → FASTA":
+elif menu == "Convert FASTQ to FASTA":
     from Bio import SeqIO
     import io
 
-    st.title("FASTQ naar FASTA Converter")
+    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
