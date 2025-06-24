@@ -187,11 +187,12 @@ elif menu == "Smelttemperatuur berekenen":
         st.write(resultaat)
 
 
-elif menu == "Convert FASTQ to FASTA":
 
-    # header met Chatgpt gedaan voor de kleur
-    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
-    st.header("Convert FASTQ to FASTA")
+elif menu == "Convert FASTQ → FASTA":
+    from Bio import SeqIO
+    import io
+
+    st.title("FASTQ naar FASTA Converter")
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
@@ -216,7 +217,7 @@ elif menu == "Convert FASTQ to FASTA":
                 data=fasta_str,
                 file_name=out_name,
                 mime="text/plain"
-            ) 
+            )
 
 elif menu == "Gen downloaden (NCBI database)":
     
