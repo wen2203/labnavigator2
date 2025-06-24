@@ -188,16 +188,19 @@ elif menu == "Smelttemperatuur berekenen":
 
 
 
+# converter code is van chagpt
+# download button https://docs.streamlit.io/develop/api-reference/widgets/st.download_button
 elif menu == "Convert FASTQ to FASTA":
-    # header 
+    from Bio import SeqIO
+    import io
+
     st.header("FASTQ naar FASTA Converter")
-    # zodat user fastq file kan uploaden 
+
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
     if uploaded_file is not None:
         out_name = st.text_input("Naam outputbestand (zonder .fasta):", value="output")
 
-        # het converteren is een code van chatgpt. 
         if st.button("Converteren"):
             if not out_name.endswith(".fasta"):
                 out_name += ".fasta"
@@ -209,11 +212,8 @@ elif menu == "Convert FASTQ to FASTA":
 
             SeqIO.convert(fastq_io, "fastq", fasta_io, "fasta")
             fasta_str = fasta_io.getvalue()
-            
-            # laat succes bericht zien als conversie is gelukt
-            st.success("✅ Conversie gelukt!")
 
-            # download knop https://docs.streamlit.io/develop/api-reference/widgets/st.download_button
+            st.success("✅ Conversie gelukt!")
             st.download_button(
                 label="⬇️ Download FASTA bestand",
                 data=fasta_str,
