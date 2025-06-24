@@ -190,7 +190,7 @@ elif menu == "Smelttemperatuur berekenen":
 
 elif menu == "Convert FASTQ → FASTA":
 
-    st.title("FASTQ naar FASTA Converter")
+    st.header("FASTQ naar FASTA Converter")
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
