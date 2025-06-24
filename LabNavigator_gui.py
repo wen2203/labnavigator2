@@ -162,29 +162,23 @@ elif menu == "Smelttemperatuur berekenen":
 
 
 elif menu == "Convert FASTQ to FASTA":
-    
-    from Bio import SeqIO 
-    import io
-
-    st.header("Convert FASTQ to FASTA")
-
+    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
-
+    
     if uploaded_file is not None:
         out_name = st.text_input("Naam outputbestand (zonder .fasta):", value="output")
-
+    
         if st.button("Converteren"):
             if not out_name.endswith(".fasta"):
                 out_name += ".fasta"
-
-            # Open bestand als tekst
-            fastq_text = uploaded_file.getvalue().decode("utf-8")
-            fastq_io = io.StringIO(fastq_text)
+    
+            # use BytesIO for uploaded file
+            fastq_io = io.BytesIO(uploaded_file.getvalue())
             fasta_io = io.StringIO()
-
+    
             SeqIO.convert(fastq_io, "fastq", fasta_io, "fasta")
             fasta_str = fasta_io.getvalue()
-
+    
             st.success("✅ Conversie gelukt!")
             st.download_button(
                 label="⬇️ Download FASTA bestand",
