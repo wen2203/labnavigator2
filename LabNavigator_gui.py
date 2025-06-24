@@ -15,8 +15,9 @@ conn, c = connect_db()
 st.image("Untitled_Artwork.png", width=500) # voeg een foto toe als logo en
 
 
-# titel bovenaan de webapp
-st.title("✧˖✧ Lab Navigator ✧˖✧")
+# titel bovenaan de webapp dit is met Chatgpt gedaan voor de kleur
+st.markdown("<h1 style='color:hotpink;'>✧˖✧ Lab Navigator ✧˖✧</h1>", unsafe_allow_html=True)
+
 # kleine alinea over Lab Navigator
 st.write("Welkom bij Lab Navigator! " \
 "Dit is een hulpmiddel om eenvoudig het lab te navigeren. " \
@@ -40,7 +41,7 @@ menu = st.sidebar.radio("Maak een keuze uit de toolbox:", [
 
 # wanneer er nieuw exp word geselecteerd
 if menu == "Nieuw experiment":
-    st.header("Nieuw experiment toevoegen")
+    st.markdown("<h3 style='color:deeppink;'>Nieuw experiment toevoegen</h3>", unsafe_allow_html=True)
     # Hier vraagt de app om gegevens van het experiment
     name = st.text_input("Experimentnaam")
     date = st.date_input("Datum:")
