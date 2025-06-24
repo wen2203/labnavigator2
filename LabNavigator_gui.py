@@ -188,7 +188,7 @@ elif menu == "Convert FASTQ to FASTA":
                 data=fasta_str,
                 file_name=out_name,
                 mime="text/plain"
-            ) it don't work why
+            ) 
 
 elif menu == "Gen downloaden (NCBI database)":
     Entrez.email = "wendypan22@hotmail.com"  
