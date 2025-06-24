@@ -14,6 +14,7 @@ conn, c = connect_db()
 
 st.image("Untitled_Artwork.png", width=500) # voeg een foto toe als logo en
 
+
 # titel bovenaan de webapp
 st.title("✧˖✧ Lab Navigator ✧˖✧")
 # kleine alinea over Lab Navigator
@@ -21,6 +22,7 @@ st.write("Welkom bij Lab Navigator! " \
 "Dit is een hulpmiddel om eenvoudig het lab te navigeren. " \
 "Maak een keuze welke tool je wilt gebruiken, zoals een planner om experimenten in te plannen," \
 " Gene Fetcher om gensequenties te downloaden, een FASTQ naar FASTA converter en de smelttemperatuur-rekenmachine.")
+
 
 # een dropdownmenu/selectbox waarin de gebruiker een optie kiest
 menu = st.selectbox("Maak een keuze uit de toolbox:", [
@@ -47,6 +49,7 @@ if menu == "Nieuw experiment":
     duration = st.number_input("Duur in minuten", min_value=1)  # getal voor duur
     user = st.text_input("Gebruiker")  # naam van de persoon
 
+    
     # als gebruiker op knop toevoegen klikt:
     if st.button("Toevoegen"):
         # Zet date en time om naar string formats
@@ -63,6 +66,7 @@ if menu == "Nieuw experiment":
         # laat een succesbericht zien
         st.success("Experiment toegevoegd!")
 
+
 elif menu == "Bekijk experimenten":
     st.header("Experimentenlijst") # experimentenlijst als header
     c.execute("SELECT * FROM experiments") #selecteer  alles van experimenten tabel
@@ -77,6 +81,7 @@ elif menu == "Bekijk experimenten":
     # geen rows is geen experimenten gevonden
     else:
         st.info("Geen experimenten gevonden.")
+
 
 elif menu == "Rond experiment af":
     st.header("Markeer experiment als afgerond")
@@ -95,6 +100,7 @@ elif menu == "Rond experiment af":
     else:
         st.info("Geen openstaande experimenten gevonden.")
 
+
 elif menu == "Verwijder experiment":
     st.header("Verwijder experiment")
     c.execute("SELECT id, name, date, start_time, duration, user, status FROM experiments")
@@ -110,6 +116,7 @@ elif menu == "Verwijder experiment":
             st.success(f"Experiment {exp_id} verwijderd.")
     else:
         st.info("Geen openstaande experimenten gevonden.")
+
 
 elif menu == "Exporteer CSV":
     st.header("Exporteer experimenten naar CSV")
@@ -141,6 +148,7 @@ elif menu == "Exporteer CSV":
             file_name="experiments.csv",
             mime="text/csv"
         )
+
 
 elif menu == "Smelttemperatuur berekenen":
     st.header("Smelttemperatuur berekenen")
@@ -200,6 +208,7 @@ elif menu == "Gen downloaden (NCBI database)":
         "Drosophila melanogaster",
         "Gorilla gorilla"
     ])
+
     
     if st.button("Downloaden"): # als user op de download knop drukt
         data = fetch_gene_data(gene, organism) # roept eigen functie aan 
