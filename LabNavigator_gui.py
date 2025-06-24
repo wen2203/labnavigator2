@@ -6,6 +6,7 @@ from Bio import SeqIO
 from Bio import Entrez
 import io
 import re
+import csv
 
 # Verbind met de database en krijg cursor om queries uit te voeren
 conn, c = connect_db()
@@ -19,7 +20,7 @@ st.write("Welkom bij Lab Navigator! " \
 "Maak een keuze welke tool je wilt gebruiken, zoals een planner om experimenten in te plannen," \
 " Gene Fetcher om gensequenties te downloaden, een FASTQ naar FASTA converter en de smelttemperatuur-rekenmachine.")
 
-# maak een dropdownmenu (selectbox) waarin de gebruiker een optie kiest
+# een dropdownmenu/selectbox waarin de gebruiker een optie kiest
 menu = st.selectbox("Maak een keuze uit de toolbox:", [
     "Nieuw experiment",
     "Bekijk experimenten",
@@ -109,10 +110,10 @@ elif menu == "Verwijder experiment":
 
 elif menu == "Exporteer CSV":
     st.header("Exporteer experimenten naar CSV")
+    # als iemand op de button klikt 
     if st.button("Exporteer CSV"):
         c.execute("SELECT * FROM experiments")
         rows = c.fetchall()
-        import csv
         output_dir = "output"
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, "experiments_export.csv")
@@ -120,7 +121,13 @@ elif menu == "Exporteer CSV":
             writer = csv.writer(f)
             writer.writerow(['ID','Naam','Datum','Starttijd','Duur','Gebruiker','Materialen','Locatie','Status'])
             writer.writerows(rows)
-        st.success(f"✅ CSV-bestand opgeslagen in: {output_path}")
+        st.success("✅ CSV-bestand gemaakt!")
+            st.download_button(
+                label="⬇️ Download CSV-bestand",
+                data=fasta_str,
+                file_name=out_name,
+                mime="text/plain"
+            )
 
 elif menu == "Smelttemperatuur berekenen":
     st.header("Smelttemperatuur berekenen")
