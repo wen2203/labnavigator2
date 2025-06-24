@@ -40,7 +40,7 @@ st.write("Welkom bij Lab Navigator! " \
 
 # een sidebar waar je opties kan selecteren
 # https://docs.streamlit.io/develop/api-reference/layout/st.sidebar
-st.sidebar.markdown("<h2 style='color:hotpink;'>Toolbox</h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h2 style='color:hotpink;'>Toolbox</h1>", unsafe_allow_html=True) # dit is met Chatgpt gedaan voor de kleur
 menu = st.sidebar.radio("Maak een keuze uit de toolbox:", (
     "Nieuw experiment",
     "Bekijk experimenten",
