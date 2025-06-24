@@ -192,7 +192,7 @@ elif menu == "Convert FASTQ to FASTA":
     from Bio import SeqIO
     import io
 
-    st.markdown("<h3 style='color:deeppink;'>Convert FASTQ to FASTA</h3>", unsafe_allow_html=True)
+    st.subheader("Convert FASTQ to FASTA")
 
     uploaded_file = st.file_uploader("Upload FASTQ-bestand", type=["fastq"])
 
