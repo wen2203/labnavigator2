@@ -1,11 +1,23 @@
-import streamlit as st  # import Streamlit om een webapp te maken https://docs.streamlit.io/develop/api-reference
-import os  # Import os voor bestands- en mapbewerkingen
-from labmate import connect_db, calculate_tm  # zelfgemaakte functies: verbinden met DB, smelttemp bereken
-from genemate import fetch_gene_data # zelfgemaakte functie gen downloaden
+# import Streamlit om een webapp te maken 
+# https://docs.streamlit.io/develop/api-reference
+import streamlit as st  
 
+# Import os voor bestands- en mapbewerkingen
+import os  
+
+# zelfgemaakte functies: verbinden met DB, smelttemp bereken
+from labmate import connect_db, calculate_tm  
+# zelfgemaakte functie: gen downloaden
+from genemate import fetch_gene_data
+
+# https://biopython.org/wiki/SeqIO
 from Bio import SeqIO
+# https://biopython.org/docs/1.76/api/Bio.Entrez.html
 from Bio import Entrez
+
+# werken met bestanden en streams in het geheugen (zoals strings of bytes)
 import io
+# lezen en schrijven van CSV-bestanden
 import csv
 
 # Verbind met de database en krijg cursor om sql queries uit te voeren
