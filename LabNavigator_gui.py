@@ -110,22 +110,31 @@ elif menu == "Verwijder experiment":
 
 elif menu == "Exporteer CSV":
     st.header("Exporteer experimenten naar CSV")
-    # als iemand op de button klikt 
+
     if st.button("Exporteer CSV"):
+        # Data ophalen uit de database
         c.execute("SELECT * FROM experiments")
         rows = c.fetchall()
+
+        # Bestand op schijf schrijven
         output_dir = "output"
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, "experiments_export.csv")
-        with open(output_path, 'w', newline='') as f:
+        with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(['ID','Naam','Datum','Starttijd','Duur','Gebruiker','Materialen','Locatie','Status'])
             writer.writerows(rows)
+
         st.success("✅ CSV-bestand gemaakt!")
-        # downloadknop
+
+        # Lees het bestand als bytes voor download
+        with open(output_path, 'rb') as f:
+            file_bytes = f.read()
+
+        # Downloadknop met de echte file-inhoud
         st.download_button(
             label="⬇️ Download CSV-bestand",
-            data=csv_data,
+            data=file_bytes,
             file_name="experiments.csv",
             mime="text/csv"
         )
